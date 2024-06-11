@@ -5,6 +5,7 @@ import jwt from  "jsonwebtoken";
 
 
 
+
 const postLogin = async (reg: any, res: any) => {
 
   try {
@@ -25,8 +26,8 @@ const postLogin = async (reg: any, res: any) => {
     console.log(user.rows[0]);
     const token = jwt.sign(user.rows[0],  'sasd',  {expiresIn: '1d'})
     res.cookie('token', token, {httpOnly:  true,  maxAge:  86400,  sameSite: 'strict'});
-    res.status(200).send({token: token});
-
+    console.log(token);
+    res.redirect('/main');
   } catch (error) {
 
     res.send(500).send({message: 'Server Error' });
