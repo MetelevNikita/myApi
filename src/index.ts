@@ -26,7 +26,7 @@ const app = express();
 
 // use
 
-app.use(cors({origin: '*'}));
+app.use(cors({origin: 'http://localhost:9000'}));
 app.use(express.json());
 app.use(express.urlencoded({extended:  true}));
 app.use(express.static(path.join(__dirname,  '..',  'public')));
@@ -39,10 +39,6 @@ app.use(morgan('dev'));
 app.use('/api/v1', loginRouter);
 app.use('/api/v1', registrationRouter)
 
-
-app.get('/', (req: any, res) => {
-  res.redirect('/login')
-})
 
 
 
@@ -57,7 +53,9 @@ app.get('/main', cookieJWTauth, (req, res) => {
 
 
 
-
+app.get('/*', (req: any, res) => {
+  res.redirect('/login')
+})
 
 
 
@@ -67,9 +65,10 @@ app.get('/main', cookieJWTauth, (req, res) => {
 
 const PORT = process.env.PORT || 9000;
 
+
 const startServer = () => {
   try {
-    app.listen(PORT, ()  =>  console.log(`Сервер стартовал с порта: ${PORT}`));
+    app.listen(PORT, ()  =>  console.log(`Сервер запущен на порту:  ${PORT}`));
   } catch (error) {
     console.log(error);
   }

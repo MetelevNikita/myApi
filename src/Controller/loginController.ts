@@ -31,6 +31,7 @@ const postLogin = async (reg: any, res: any) => {
     console.log(user.rows[0]);
     const token = jwt.sign(user.rows[0],  process.env.JWT_SECRET as string,  {expiresIn: '1d'})
     res.cookie('token', token, {httpOnly:  true,  maxAge:  86400,  sameSite: 'strict'});
+    console.log(token)
     return res.redirect('/main')
 
   } catch (error) {

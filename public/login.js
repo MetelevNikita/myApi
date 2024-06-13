@@ -5,9 +5,8 @@ console.log(regBtn)
 regBtn.addEventListener("click", (e) => {
 
   e.preventDefault();
-  alert("You have successfully registered!");
-
-  window.location.href = "registration.html";
+  console.log("clicked");
+  window.location.href = "/registration";
 
 
 })

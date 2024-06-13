@@ -9,14 +9,24 @@ const postRegistrationUser = async (req: any, res: any) => {
 
   try {
 
-    const {name, email, password} = req.body
+    const {name, email, password, verifyPassword} = req.body
+
+    if(!name  ||!email  ||!password)   {
+      res.status(400).json({error:  "Поля не должны быть пустыми"})
+      return
+    }
+
+    if(password !==  verifyPassword)  {
+      res.status(400).json({error:  "Пароли не совпадают"})
+
+    }
 
     console.log(name, email, password)
 
-    const newUser = await Pool.query("INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *", [name, email, password]);
+    const newUser = await Pool.query("INSERT INTO users (name, email, password, verifyPassword) VALUES ($1, $2, $3, $4) RETURNING *", [name, email, password, verifyPassword]);
 
     if(!newUser.rows[0]) {
-      res.status(400).json({error: "User already exists"})
+      res.status(400).json({error: "Пользователь не создан"})
       return
     }
 
